@@ -32,7 +32,7 @@ import { JsonPipe } from '@angular/common';
     ReactiveFormsModule,
     HttpClientModule,
     RouterModule,
-    JsonPipe,
+    //JsonPipe,
     // other common modules
     // CustomDirective,
     // CustomPipe,

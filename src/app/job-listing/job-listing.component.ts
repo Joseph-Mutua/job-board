@@ -3,6 +3,13 @@ import { JobService } from '../services/jobs.service';
 import { Job } from '../interfaces/job.model';
 import { SharedModule } from '../shared/shared.module';
 
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { AppState } from '../store/state';
+import { loadJobs } from '../store/actions/job.actions';
+
+import { setFilter, setSort } from '../store/actions/job.actions';
+
 
 @Component({
   standalone: true,
@@ -12,44 +19,38 @@ import { SharedModule } from '../shared/shared.module';
   imports: [SharedModule],
   providers: [JobService],
 })
-
 export class JobListingComponent implements OnInit {
-  jobListings: Job[] = []; // Assuming jobListings are fetched from the service
-  filteredJobs: Job[] = [];
-  searchKeyword: string = '';
+  jobListings$: Observable<Job[]>;
 
-  constructor(private jobService: JobService) {}
+  constructor(private store: Store<AppState>) {
+    this.jobListings$ = store.select(state => {
+      let jobs = state.jobs;
 
-  ngOnInit() {
-    // Assuming you're fetching jobListings from a service
-    this.jobService.getJobs().subscribe({
-      next: (jobs: Job[]) => {
-        this.jobListings = jobs;
-        this.filteredJobs = jobs; // Initial listing displays all jobs
-      },
-      error: (error) => {
-        console.error('Error fetching jobs: ', error);
-      },
+      // Apply filter
+      if (state.filter) {
+        jobs = jobs.filter(job => /* filter jobs based on state.filter */);
+      }
+
+      // Apply sort
+      if (state.sort) {
+        jobs = jobs.sort((a, b) => /* sort jobs based on state.sort */);
+      }
+
+      return jobs;
     });
   }
 
-  searchJobs() {
-    if (this.searchKeyword.trim() !== '') {
-      this.filteredJobs = this.jobListings.filter((job) =>
-        job.job_title.toLowerCase().includes(this.searchKeyword.toLowerCase())
-      );
-    } else {
-      this.filteredJobs = this.jobListings; // Reset to display all jobs if search is empty
-    }
+  ngOnInit() {
+    this.store.dispatch(loadJobs());
   }
 
-  sortByRelevance() {
-    // Add logic to sort jobs by relevance
-    // For example: this.filteredJobs.sort((a, b) => a.relevance - b.relevance);
+  onFilterChange(filter: string) {
+    this.store.dispatch(setFilter({ filter }));
   }
 
-  sortByDateAdded() {
-    // Add logic to sort jobs by date added
-    // For example: this.filteredJobs.sort((a, b) => a.dateAdded - b.dateAdded);
+  onSortChange(sort:any) {
+    this.store.dispatch(setSort({ sort }));
   }
+
+  // other methods...
 }
