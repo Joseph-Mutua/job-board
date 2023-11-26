@@ -1,13 +1,49 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { JobService } from './job.service';
+import { Job } from './job.model';
 
 @Component({
   selector: 'app-job-listing',
-  standalone: true,
-  imports: [CommonModule],
   templateUrl: './job-listing.component.html',
-  styleUrl: './job-listing.component.css'
+  styleUrls: ['./job-listing.component.css'],
 })
-export class JobListingComponent {
+export class JobListingComponent implements OnInit {
+  jobListings: Job[] = []; // Assuming jobListings are fetched from the service
+  filteredJobs: Job[] = [];
+  searchKeyword: string = '';
 
+  constructor(private jobService: JobService) {}
+
+  ngOnInit() {
+    // Assuming you're fetching jobListings from a service
+    this.jobService.getJobs().subscribe(
+      (jobs: Job[]) => {
+        this.jobListings = jobs;
+        this.filteredJobs = jobs; // Initial listing displays all jobs
+      },
+      (error) => {
+        console.error('Error fetching jobs: ', error);
+      }
+    );
+  }
+
+  searchJobs() {
+    if (this.searchKeyword.trim() !== '') {
+      this.filteredJobs = this.jobListings.filter((job) =>
+        job.title.toLowerCase().includes(this.searchKeyword.toLowerCase())
+      );
+    } else {
+      this.filteredJobs = this.jobListings; // Reset to display all jobs if search is empty
+    }
+  }
+
+  sortByRelevance() {
+    // Add logic to sort jobs by relevance
+    // For example: this.filteredJobs.sort((a, b) => a.relevance - b.relevance);
+  }
+
+  sortByDateAdded() {
+    // Add logic to sort jobs by date added
+    // For example: this.filteredJobs.sort((a, b) => a.dateAdded - b.dateAdded);
+  }
 }
