@@ -1,12 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { JobService } from './job.service';
-import { Job } from './job.model';
+import { JobService } from '../services/jobs.service';
+import { Job } from '../interfaces/job.model';
+import { SharedModule } from '../shared/shared.module';
+
 
 @Component({
+  standalone: true,
   selector: 'app-job-listing',
   templateUrl: './job-listing.component.html',
   styleUrls: ['./job-listing.component.css'],
+  imports: [SharedModule],
+  providers: [JobService],
 })
+
 export class JobListingComponent implements OnInit {
   jobListings: Job[] = []; // Assuming jobListings are fetched from the service
   filteredJobs: Job[] = [];
@@ -16,21 +22,21 @@ export class JobListingComponent implements OnInit {
 
   ngOnInit() {
     // Assuming you're fetching jobListings from a service
-    this.jobService.getJobs().subscribe(
-      (jobs: Job[]) => {
+    this.jobService.getJobs().subscribe({
+      next: (jobs: Job[]) => {
         this.jobListings = jobs;
         this.filteredJobs = jobs; // Initial listing displays all jobs
       },
-      (error) => {
+      error: (error) => {
         console.error('Error fetching jobs: ', error);
-      }
-    );
+      },
+    });
   }
 
   searchJobs() {
     if (this.searchKeyword.trim() !== '') {
       this.filteredJobs = this.jobListings.filter((job) =>
-        job.title.toLowerCase().includes(this.searchKeyword.toLowerCase())
+        job.job_title.toLowerCase().includes(this.searchKeyword.toLowerCase())
       );
     } else {
       this.filteredJobs = this.jobListings; // Reset to display all jobs if search is empty

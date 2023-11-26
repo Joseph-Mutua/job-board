@@ -1,10 +1,8 @@
 
 export interface Job {
   id: number;
-  title: string;
-  company: string;
+  job_title: string;
+  company_name: string;
   location: string;
   description: string;
-  jobType: string;
-  // Add more fields as needed
 }

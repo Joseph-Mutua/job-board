@@ -1,1 +1,29 @@
-<p>job-listing works!</p>
+
+  <!-- <div class="search-bar">
+   <input type="text" placeholder="Search jobs..." [(model)]="searchKeyword">
+
+  </div> -->
+
+  <!-- <div *ngFor="let job of filteredJobs"> -->
+  <!-- Content to repeat -->
+  <pre>{{filteredJobs| json }}</pre>
+
+  <div class="sorting-buttons">
+    <button (click)="sortByRelevance()">Sort by Relevance</button>
+    <button (click)="sortByDateAdded()">Sort by Date Added</button>
+  </div>
+
+  <!-- <div class="job-detail-cards">
+    <div *ngFor="let job of filteredJobs">
+      <div class="job-card">
+        <h3>{{ job?.job_title }}</h3>
+        <p>Company: {{ job?.company_name }}</p>
+        <p>Location: {{ job?.location }}</p>
+        <p>Description: {{ job?.description }}</p>
+        
+      </div>
+    </div>
+  </div> -->
+<!-- </div> -->
+
+<!-- <pre>{{ myJobs | json }}</pre> -->
