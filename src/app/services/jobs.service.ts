@@ -8,7 +8,7 @@ import { Job } from '../interfaces/job.model';
   providedIn: 'root',
 })
 export class JobService {
-  private apiUrl = 'assets/jobs.json'; // Path to your JSON file
+  private apiUrl = '../assets/jobs.json'; 
 
   constructor(private http: HttpClient) {}
 

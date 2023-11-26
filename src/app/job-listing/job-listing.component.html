@@ -1,27 +1,35 @@
+<div>
+  <!-- Search and filter form -->
+  <!-- <form>
+    <input type="text" placeholder="Job title" (input)="filterJobs($event.target.value, '', '', '')">
+    <input type="text" placeholder="Location" (input)="filterJobs('', $event.target.value, '', '')">
+    <input type="text" placeholder="Company name" (input)="filterJobs('', '', $event.target?.value, '')">
+    <select (change)="filterJobs('', '', '', $event.target?.value)">
+      <option value="">All types</option>
+      <option value="full-time">Full-time</option>
+      <option value="part-time">Part-time</option>
+      <option value="remote">Remote</option>
+    </select>
+    <button type="button" (click)="searchJobs()">Search</button>
+  </form> -->
 
-<div class="search-bar">
-    <input type="text" placeholder="Search jobs..." [(ngModel)]="searchKeyword">
-    <button (click)="searchJobs()">Search</button>
+  <!-- Sort options -->
+  <div>
+    <button type="button" (click)="sortJobs('date')">Sort by date</button>
+    <button type="button" (click)="sortJobs('type')">Sort by type</button>
+  </div>
+
+<!-- Job listings -->
+<div *ngIf="jobListings as jobListings;">
+  <div *ngFor="let job of jobListings">
+    <h2>{{ job.job_title }}</h2>
+    <p>{{ job.company_name }}</p>
+    <p>{{ job.location }}</p>
+    <p>{{ job.description }}</p>
+    <p>{{ job.date_posted }}</p>
+    <p>{{ job.job_type }}</p>
+  </div>
 </div>
 
-  <!-- <pre>{{filteredJobs| json }}</pre> -->
-
-  <div class="sorting-buttons">
-    <button (click)="sortByRelevance()">Sort by Relevance</button>
-    <button (click)="sortByDateAdded()">Sort by Date Added</button>
-  </div>
-
-  <div class="job-detail-cards">
-    <div *ngFor="let job of filteredJobs">
-      <div class="job-card">
-        <h3>Job Title: {{ job?.job_title }}</h3>
-        <p>Company: {{ job?.company_name }}</p>
-        <p>Location: {{ job?.location }}</p>
-        <p>Description: {{ job?.description }}</p>
-        
-      </div>
-    </div>
-  </div>
-<!-- </div> -->
-
-<!-- <pre>{{ myJobs | json }}</pre> -->
+<pre> {{jobListings | json}} </pre>
+</div>

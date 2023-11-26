@@ -5,6 +5,11 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { JsonPipe } from '@angular/common';
 
+
+import { Store, StoreModule } from '@ngrx/store';
+import { jobReducer } from '../store/reducers/job.reducer';
+import { counterReducer } from '../store/reducers/counter.reducer';
+
 // Import other common modules, pipes, directives
 // For example:
 // import { CustomDirective } from './directives/custom.directive';
@@ -24,6 +29,7 @@ import { JsonPipe } from '@angular/common';
     HttpClientModule,
     RouterModule,
     JsonPipe,
+    StoreModule.forRoot({ jobs: jobReducer, kamtu: counterReducer }),
     // other common modules
   ],
   exports: [
@@ -32,6 +38,8 @@ import { JsonPipe } from '@angular/common';
     ReactiveFormsModule,
     HttpClientModule,
     RouterModule,
+    StoreModule,
+   // [StoreModule.forRoot({ jobs: jobReducer })],
     //JsonPipe,
     // other common modules
     // CustomDirective,
