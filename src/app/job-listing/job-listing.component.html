@@ -7,13 +7,13 @@
             <div class="row">
               <div class="col-12">
                 <div class="row no-gutters">
-                  <div class="col-lg-3 col-md-3 col-sm-12 p-0">
+                  <div class="col-lg-3 col-md-3 col-sm-12 p-2">
                     <select
                       class="form-control"
                       id="exampleFormControlSelect1"
                       (change)="onLocationChange($event)"
                     >
-                      <option value="">Location</option>
+                      <option value="">Filter by Location</option>
                       <option value="Nairobi">Nairobi</option>
                       <option value="Mombasa">Mombasa</option>
                       <option value="Kisumu">Kisumu</option>
@@ -117,7 +117,7 @@
                                 <a href="#" class="employer-name">{{
                                   job.company_name
                                 }}</a>
-                                <span class="text-muted time"
+                                <span class="text-muted time p-2"
                                   >{{ daysAgo(job.date_posted) }} days ago</span
                                 >
                               </p>

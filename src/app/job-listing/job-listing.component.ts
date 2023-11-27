@@ -47,7 +47,6 @@ export class JobListingComponent implements OnInit {
   }
 
   //Filtering and Sort Functionality
-
   search(text$: Observable<string>) {
     return text$.pipe(
       map((term) =>
