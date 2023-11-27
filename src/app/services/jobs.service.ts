@@ -1,9 +1,7 @@
-// job.service.ts
-// job.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
 import { Job } from '../interfaces/job.model';
+import { StateService } from './state.service';
 
 @Injectable({
   providedIn: 'root',
@@ -11,9 +9,11 @@ import { Job } from '../interfaces/job.model';
 export class JobService {
   private apiUrl = 'assets/jobs.json'; // Path to your JSON file
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private stateService: StateService) {}
 
-  getJobs(): Observable<Job[]> {
-    return this.http.get<Job[]>(this.apiUrl);
+  getJobs(): void {
+    this.http.get<Job[]>(this.apiUrl).subscribe((jobs) => {
+      this.stateService.setJobs(jobs);
+    });
   }
 }

@@ -6,9 +6,8 @@ import { RouterModule } from '@angular/router';
 
 import { StoreModule } from '@ngrx/store';
 import { NgbModule, NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
-import { EffectsModule } from '@ngrx/effects';
-import { jobReducer } from '../store/reducers/job.reducer';
-import { JobEffects } from '../store/effects/job.effects';
+
+
 
 @NgModule({
   declarations: [
@@ -20,9 +19,7 @@ import { JobEffects } from '../store/effects/job.effects';
     ReactiveFormsModule,
     HttpClientModule,
     RouterModule,
-    //StoreModule.forRoot({ jobs: jobReducer }),
-    // EffectsModule.forRoot([JobEffects]),
-    // other common modules
+
 
     NgbModule,
     NgbTypeaheadModule,

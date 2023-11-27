@@ -1,60 +1,9 @@
-// import { Component, OnInit } from '@angular/core';
-// import { Job } from '../interfaces/job.model';
-// import { SharedModule } from '../shared/shared.module';
-// import { Store } from '@ngrx/store';
-// import { Observable } from 'rxjs';
-// import { AppState, selectJobs } from '../store/reducers/job.reducer';
-// import { loadJobs } from '../store/actions/job.actions';
-// import { setFilter, setSort } from '../store/actions/job.actions';
-// import { JobService } from '../services/jobs.service';
-// import { loadJobsSuccess } from '../store/actions/job.actions';
-
-
-// @Component({
-//   standalone: true,
-//   selector: 'app-job-listing',
-//   templateUrl: './job-listing.component.html',
-//   styleUrls: ['./job-listing.component.css'],
-//   imports: [SharedModule],
-// })
-// export class JobListingComponent implements OnInit {
-//   jobListings$: Observable<Job[]>;
-//   jobListings: Job[] = [];
-
-//   constructor(private store: Store<AppState>, private jobService: JobService) {
-//     this.jobListings$ = this.store.select(selectJobs);
-//   }
-
-//   ngOnInit() {
-//     this.jobService.getJobs().subscribe((jobs) => {
-//       this.store.dispatch(loadJobsSuccess({ jobs }));
-//     });
-//     this.jobListings$.subscribe((jobs) => {
-//       this.jobListings = jobs;
-//     });
-//   }
-
-
-
-
-//   onFilterChange(filter: string) {
-//     this.store.dispatch(setFilter({ filter }));
-//   }
-
-//   filterJobs(title: string, location: string, company: string, type: string) {
-//     const filter = { title, location, company, type };
-//     this.store.dispatch(setFilter({ filter: JSON.stringify(filter) }));
-//   }
-
-//   sortJobs(criteria: string) {
-//     this.store.dispatch(setSort({ sort: criteria }));
-//   }
-// }
 
 import { Component, OnInit } from '@angular/core';
 import { Job } from '../interfaces/job.model';
 import { SharedModule } from '../shared/shared.module';
 import { JobService } from '../services/jobs.service';
+import { StateService } from '../services/state.service';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -80,10 +29,25 @@ export class JobListingComponent implements OnInit {
   startIndex: number = 0;
   endIndex: number = 0;
 
-  constructor(private jobService: JobService) {}
+  constructor(
+    private jobService: JobService,
+    private stateService: StateService
+  ) {}
 
+  // ngOnInit() {
+  //   this.jobService.getJobs().subscribe((jobs) => {
+  //     this.jobListings = jobs;
+  //     this.filteredJobs = jobs;
+
+  //     // const totalItems = this.filteredJobs.length;
+  //     // this.totalPages = Array(Math.ceil(totalItems / this.itemsPerPage))
+  //     //   .fill(0)
+  //     //   .map((x, i) => i + 1);
+  //   });
+  // }
   ngOnInit() {
-    this.jobService.getJobs().subscribe((jobs) => {
+    this.jobService.getJobs();
+    this.stateService.jobs.subscribe((jobs) => {
       this.jobListings = jobs;
       this.filteredJobs = jobs;
 
