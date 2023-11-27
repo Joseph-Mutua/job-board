@@ -7,7 +7,8 @@ import { StateService } from './state.service';
   providedIn: 'root',
 })
 export class JobService {
-  private apiUrl = 'assets/jobs.json'; // Path to your JSON file
+//Path to JSON file
+  private apiUrl = 'assets/jobs.json';
 
   constructor(private http: HttpClient, private stateService: StateService) {}
 

@@ -34,17 +34,6 @@ export class JobListingComponent implements OnInit {
     private stateService: StateService
   ) {}
 
-  // ngOnInit() {
-  //   this.jobService.getJobs().subscribe((jobs) => {
-  //     this.jobListings = jobs;
-  //     this.filteredJobs = jobs;
-
-  //     // const totalItems = this.filteredJobs.length;
-  //     // this.totalPages = Array(Math.ceil(totalItems / this.itemsPerPage))
-  //     //   .fill(0)
-  //     //   .map((x, i) => i + 1);
-  //   });
-  // }
   ngOnInit() {
     this.jobService.getJobs();
     this.stateService.jobs.subscribe((jobs) => {
@@ -97,7 +86,7 @@ export class JobListingComponent implements OnInit {
   }
 
   filterJobs() {
-    let filtered = [...this.jobListings]; // create a new array
+    let filtered = [...this.jobListings];
 
     if (this.searchKeyword.trim() !== '') {
       filtered = filtered.filter(
@@ -126,8 +115,8 @@ export class JobListingComponent implements OnInit {
           job.location.toLowerCase() === this.locationKeyword.toLowerCase()
       );
     }
-
-    this.filteredJobs = filtered; // assign the new array to filteredJobs
+    // assign the new array to filteredJobs
+    this.filteredJobs = filtered;
   }
 
   sortJobs() {

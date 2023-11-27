@@ -11,7 +11,6 @@ import { NgbModule, NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
-    // Declare your common directives and pipes here
   ],
   imports: [
     CommonModule,
@@ -19,8 +18,6 @@ import { NgbModule, NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
     ReactiveFormsModule,
     HttpClientModule,
     RouterModule,
-
-
     NgbModule,
     NgbTypeaheadModule,
   ],
@@ -31,9 +28,6 @@ import { NgbModule, NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
     HttpClientModule,
     RouterModule,
     StoreModule,
-
-    //EffectsModule,
-    // other common modules
 
     NgbModule,
     NgbTypeaheadModule,
