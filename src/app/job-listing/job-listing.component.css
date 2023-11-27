@@ -2,23 +2,5 @@
   padding: 20px;
 }
 
-.search-bar {
-  margin-bottom: 20px;
-}
 
-.sorting-buttons {
-  margin-bottom: 20px;
-}
 
-.job-detail-cards {
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.job-card {
-  border: 1px solid #ccc;
-  padding: 10px;
-  margin: 10px;
-  border-radius: 5px;
-}
-/* Add more styling as needed */

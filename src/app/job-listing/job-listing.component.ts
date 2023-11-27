@@ -26,7 +26,6 @@ export class JobListingComponent implements OnInit {
   currentPage = 1;
   totalPages: number[] = [];
 
-  startIndex: number = 0;
   endIndex: number = 0;
 
   constructor(
@@ -46,6 +45,10 @@ export class JobListingComponent implements OnInit {
         .map((x, i) => i + 1);
     });
   }
+
+
+
+  //Filtering and Sort Functionality
 
   search(text$: Observable<string>) {
     return text$.pipe(
@@ -130,6 +133,12 @@ export class JobListingComponent implements OnInit {
     }
   }
 
+
+  //Pagination Functionality
+  get startIndex(): number {
+    return (this.currentPage - 1) * this.itemsPerPage;
+  }
+
   onPageChange(pageNumber: number) {
     this.currentPage = pageNumber;
     this.calculateIndexes();
@@ -145,10 +154,6 @@ export class JobListingComponent implements OnInit {
     const { start, end } = this.calculateIndexes();
     return this.filteredJobs.slice(start, end);
   }
-
-  // get pageNumbers(): number[] {
-  //   return Array.from({ length: this.totalPages }, (_, i) => i + 1);
-  // }
 
   get rangeStart(): number {
     return this.startIndex + 1;

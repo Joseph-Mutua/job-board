@@ -9,13 +9,3 @@ export interface Job {
   date_posted: string;
   job_category: string;
 }
-
-interface JobState {
-  jobs: Job[];
-  filter: any;
-  sort: any;
-}
-
-export interface AppState {
-  job: JobState;
-}
