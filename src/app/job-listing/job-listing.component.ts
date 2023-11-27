@@ -73,12 +73,24 @@ export class JobListingComponent implements OnInit {
   sortType: string = '';
   locationKeyword: string = '';
 
+  itemsPerPage = 30;
+  currentPage = 1;
+  totalPages: number[] = [];
+
+  startIndex: number = 0;
+  endIndex: number = 0;
+
   constructor(private jobService: JobService) {}
 
   ngOnInit() {
     this.jobService.getJobs().subscribe((jobs) => {
       this.jobListings = jobs;
       this.filteredJobs = jobs;
+
+      const totalItems = this.filteredJobs.length;
+      this.totalPages = Array(Math.ceil(totalItems / this.itemsPerPage))
+        .fill(0)
+        .map((x, i) => i + 1);
     });
   }
 
@@ -121,10 +133,10 @@ export class JobListingComponent implements OnInit {
   }
 
   filterJobs() {
-    this.filteredJobs = this.jobListings;
+    let filtered = [...this.jobListings]; // create a new array
 
     if (this.searchKeyword.trim() !== '') {
-      this.filteredJobs = this.filteredJobs.filter(
+      filtered = filtered.filter(
         (job) =>
           job.job_title
             .toLowerCase()
@@ -144,12 +156,14 @@ export class JobListingComponent implements OnInit {
       );
     }
 
-      if (this.locationKeyword.trim() !== '') {
-        this.filteredJobs = this.filteredJobs.filter(
-          (job) =>
-            job.location.toLowerCase() === this.locationKeyword.toLowerCase()
-        );
-      }
+    if (this.locationKeyword.trim() !== '') {
+      filtered = filtered.filter(
+        (job) =>
+          job.location.toLowerCase() === this.locationKeyword.toLowerCase()
+      );
+    }
+
+    this.filteredJobs = filtered; // assign the new array to filteredJobs
   }
 
   sortJobs() {
@@ -161,5 +175,36 @@ export class JobListingComponent implements OnInit {
     } else if (this.sortType === 'type') {
       this.filteredJobs.sort((a, b) => a.job_type.localeCompare(b.job_type));
     }
+  }
+
+  onPageChange(pageNumber: number) {
+    this.currentPage = pageNumber;
+    this.calculateIndexes();
+  }
+
+  calculateIndexes() {
+    const start = (this.currentPage - 1) * this.itemsPerPage;
+    const end = this.currentPage * this.itemsPerPage;
+    return { start, end };
+  }
+
+  get paginatedJobs(): Job[] {
+    const { start, end } = this.calculateIndexes();
+    return this.filteredJobs.slice(start, end);
+  }
+
+  // get pageNumbers(): number[] {
+  //   return Array.from({ length: this.totalPages }, (_, i) => i + 1);
+  // }
+
+  get rangeStart(): number {
+    return this.startIndex + 1;
+  }
+
+  get rangeEnd(): number {
+    return Math.min(
+      this.startIndex + this.itemsPerPage,
+      this.filteredJobs.length
+    );
   }
 }

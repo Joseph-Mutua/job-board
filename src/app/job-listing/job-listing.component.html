@@ -123,7 +123,8 @@
                   <div class="row">
                     <div class="col-lg-6">
                       <div class="records">
-                        Showing: <b>1-20</b> of <b>200</b> result
+                        Showing: <b>{{ rangeStart }}-{{ rangeEnd }}</b> of
+                        <b>{{ filteredJobs.length }}</b> result
                       </div>
                     </div>
                     <div class="col-lg-6">
@@ -149,75 +150,97 @@
                 </div>
                 <div class="">
                   <div class="table-responsive">
-                  <table class="table widget-26">
-  <thead>
-    <tr>
-      <th>Job Title</th>
-      <th>Date Posted</th>
-      <th>Job Type</th>
-      <th>Location</th>
-      <th>Job Category</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let job of filteredJobs">
-      <td>
-        <div class="widget-26-job-title">
-          <a href="#">{{ job.job_title }}</a>
-          <p class="m-0">
-            <a href="#" class="employer-name">{{ job.company_name }}</a>
-            <span class="text-muted time">{{ daysAgo(job.date_posted) }} days ago</span>
-          </p>
-        </div>
-      </td>
+                    <table class="table widget-26">
+                      <thead>
+                        <tr>
+                          <th>Job Title</th>
+                          <th>Date Posted</th>
+                          <th>Job Type</th>
+                          <th>Location</th>
+                          <th>Job Category</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let job of paginatedJobs">
+                          <td>
+                            <div class="widget-26-job-title">
+                              <a href="#">{{ job.job_title }}</a>
+                              <p class="m-0">
+                                <a href="#" class="employer-name">{{
+                                  job.company_name
+                                }}</a>
+                                <span class="text-muted time"
+                                  >{{ daysAgo(job.date_posted) }} days ago</span
+                                >
+                              </p>
+                            </div>
+                          </td>
 
-      <td>
-        <div class="widget-26-job-info">
-          <p class="text-muted m-0">{{ job.date_posted | date : "dd/MM/yyyy" }}</p>
-        </div>
-      </td>
-      <td>
-        <div class="widget-26-job-type">{{ job.job_type }}</div>
-      </td>
-      <td>
-        <div class="widget-26-job-info">
-          <p class="text-muted m-0">
-            In <span class="location">{{ job.location }}</span>
-          </p>
-        </div>
-      </td>
+                          <td>
+                            <div class="widget-26-job-info">
+                              <p class="text-muted m-0">
+                                {{ job.date_posted | date : "dd/MM/yyyy" }}
+                              </p>
+                            </div>
+                          </td>
+                          <td>
+                            <div class="widget-26-job-type">
+                              {{ job.job_type }}
+                            </div>
+                          </td>
+                          <td>
+                            <div class="widget-26-job-info">
+                              <p class="text-muted m-0">
+                                In
+                                <span class="location">{{ job.location }}</span>
+                              </p>
+                            </div>
+                          </td>
 
-      <td>
-        <div class="widget-26-job-category" [ngClass]="{
-          'bg-soft-base': job.job_category === 'Banking and Finance',
-          'bg-soft-warning': job.job_category === 'Arts and Design',
-          'bg-soft-success': job.job_category === 'Energy and Utilities' || (job.job_category !== 'Banking and Finance' && job.job_category !== 'Arts and Design' && job.job_category !== 'Engineering' && job.job_category !== 'Information Technology' && job.job_category !== 'Healthcare'),
-          'bg-soft-danger': job.job_category === 'Engineering' || job.job_category === 'Information Technology',
-          'bg-soft-info': job.job_category === 'Healthcare'
-        }">
-          <i class="indicator bg-base"></i>
-          <span>{{ job.job_category }}</span>
-        </div>
-      </td>
-    </tr>
-    <tr *ngIf="filteredJobs.length === 0">
-      <td colspan="5" class="text-center">No Jobs Found</td>
-    </tr>
-  </tbody>
-</table>
-
+                          <td>
+                            <div
+                              class="widget-26-job-category"
+                              [ngClass]="{
+                                'bg-soft-base':
+                                  job.job_category === 'Banking and Finance',
+                                'bg-soft-warning':
+                                  job.job_category === 'Arts and Design',
+                                'bg-soft-success':
+                                  job.job_category === 'Energy and Utilities' ||
+                                  (job.job_category !== 'Banking and Finance' &&
+                                    job.job_category !== 'Arts and Design' &&
+                                    job.job_category !== 'Engineering' &&
+                                    job.job_category !==
+                                      'Information Technology' &&
+                                    job.job_category !== 'Healthcare'),
+                                'bg-soft-danger':
+                                  job.job_category === 'Engineering' ||
+                                  job.job_category === 'Information Technology',
+                                'bg-soft-info':
+                                  job.job_category === 'Healthcare'
+                              }"
+                            >
+                              <i class="indicator bg-base"></i>
+                              <span>{{ job.job_category }}</span>
+                            </div>
+                          </td>
+                        </tr>
+                        <tr *ngIf="paginatedJobs.length === 0">
+                          <td colspan="5" class="text-center">No Jobs Found</td>
+                        </tr>
+                      </tbody>
+                    </table>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <nav class="d-flex justify-content-center">
+          <!-- <nav class="d-flex justify-content-center">
             <ul
               class="pagination pagination-base pagination-boxed pagination-square mb-0"
             >
               <li class="page-item">
                 <a class="page-link no-border" href="#">
-                  <span aria-hidden="true">«</span>
                   <span class="sr-only">Previous</span>
                 </a>
               </li>
@@ -235,12 +258,20 @@
               </li>
               <li class="page-item">
                 <a class="page-link no-border" href="#">
-                  <span aria-hidden="true">»</span>
                   <span class="sr-only">Next</span>
                 </a>
               </li>
             </ul>
-          </nav>
+          </nav> -->
+<nav class="d-flex justify-content-center">
+  <ul class="pagination pagination-base pagination-boxed pagination-square mb-0">
+    <li class="page-item" *ngFor="let page of totalPages; let i = index">
+      <a class="page-link no-border" href="#" [class.active]="currentPage === page" (click)="currentPage = page">
+        {{ page }}
+      </a>
+    </li>
+  </ul>
+</nav>
         </div>
       </div>
     </div>
