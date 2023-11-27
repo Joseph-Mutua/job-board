@@ -22,7 +22,7 @@ export class JobListingComponent implements OnInit {
   sortType: string = '';
   locationKeyword: string = '';
 
-  itemsPerPage = 30;
+  itemsPerPage = 10;
   currentPage = 1;
   totalPages: number[] = [];
 
@@ -45,8 +45,6 @@ export class JobListingComponent implements OnInit {
         .map((x, i) => i + 1);
     });
   }
-
-
 
   //Filtering and Sort Functionality
 
@@ -128,11 +126,10 @@ export class JobListingComponent implements OnInit {
         (a, b) =>
           new Date(b.date_posted).getTime() - new Date(a.date_posted).getTime()
       );
-    } else if (this.sortType === 'type') {
-      this.filteredJobs.sort((a, b) => a.job_type.localeCompare(b.job_type));
+    } else if (this.sortType === 'category') {
+      this.filteredJobs.sort((a, b) => a.job_category.localeCompare(b.job_category));
     }
   }
-
 
   //Pagination Functionality
   get startIndex(): number {

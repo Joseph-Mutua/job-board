@@ -156,6 +156,11 @@ body {
   margin-bottom: 1.5rem;
 }
 
+.page-number:hover {
+  cursor: pointer;
+}
+
+
 .search-body .search-filters .filter-list {
   margin-bottom: 1.3rem;
 }
