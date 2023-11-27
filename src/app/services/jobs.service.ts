@@ -1,4 +1,5 @@
 // job.service.ts
+// job.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -8,7 +9,7 @@ import { Job } from '../interfaces/job.model';
   providedIn: 'root',
 })
 export class JobService {
-  private apiUrl = '../assets/jobs.json'; 
+  private apiUrl = 'assets/jobs.json'; // Path to your JSON file
 
   constructor(private http: HttpClient) {}
 

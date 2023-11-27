@@ -3,24 +3,16 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
-import { JsonPipe } from '@angular/common';
 
-
-import { Store, StoreModule } from '@ngrx/store';
+import { StoreModule } from '@ngrx/store';
+import { NgbModule, NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
+import { EffectsModule } from '@ngrx/effects';
 import { jobReducer } from '../store/reducers/job.reducer';
-import { counterReducer } from '../store/reducers/counter.reducer';
-
-// Import other common modules, pipes, directives
-// For example:
-// import { CustomDirective } from './directives/custom.directive';
-// import { CustomPipe } from './pipes/custom.pipe';
+import { JobEffects } from '../store/effects/job.effects';
 
 @NgModule({
   declarations: [
     // Declare your common directives and pipes here
-    // For example:
-    // CustomDirective,
-    // CustomPipe,
   ],
   imports: [
     CommonModule,
@@ -28,9 +20,12 @@ import { counterReducer } from '../store/reducers/counter.reducer';
     ReactiveFormsModule,
     HttpClientModule,
     RouterModule,
-    JsonPipe,
-    StoreModule.forRoot({ jobs: jobReducer, kamtu: counterReducer }),
+    //StoreModule.forRoot({ jobs: jobReducer }),
+    // EffectsModule.forRoot([JobEffects]),
     // other common modules
+
+    NgbModule,
+    NgbTypeaheadModule,
   ],
   exports: [
     CommonModule,
@@ -39,11 +34,12 @@ import { counterReducer } from '../store/reducers/counter.reducer';
     HttpClientModule,
     RouterModule,
     StoreModule,
-   // [StoreModule.forRoot({ jobs: jobReducer })],
-    //JsonPipe,
+
+    //EffectsModule,
     // other common modules
-    // CustomDirective,
-    // CustomPipe,
+
+    NgbModule,
+    NgbTypeaheadModule,
   ],
 })
 export class SharedModule {}

@@ -7,6 +7,7 @@ export interface Job {
   location: string;
   description: string;
   date_posted: string;
+  job_category: string;
 }
 
 interface JobState {

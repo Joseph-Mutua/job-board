@@ -10,10 +10,6 @@ import { Job } from './interfaces/job.model';
 import { jobReducer } from './store/reducers/job.reducer';
 import { StoreModule } from '@ngrx/store';
 import {JobListingComponent} from './job-listing/job-listing.component';
-
-
-
-
 @Component({
   selector: 'app-root',
   standalone: true,

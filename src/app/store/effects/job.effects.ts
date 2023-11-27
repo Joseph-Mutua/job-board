@@ -1,9 +1,14 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { EMPTY } from 'rxjs';
+import { of } from 'rxjs';
 import { map, mergeMap, catchError } from 'rxjs/operators';
 import { JobService } from '../../services/jobs.service';
-import { loadJobs, loadJobsSuccess, loadJobsFailure } from '../actions/job.actions';
+
+import {
+  loadJobs,
+  loadJobsSuccess,
+  loadJobsFailure,
+} from '../actions/job.actions';
 
 @Injectable()
 export class JobEffects {
@@ -13,11 +18,14 @@ export class JobEffects {
       mergeMap(() =>
         this.jobService.getJobs().pipe(
           map((jobs) => loadJobsSuccess({ jobs })),
-          catchError(() => EMPTY)
+          catchError((error) => of(loadJobsFailure({ error })))
         )
       )
     )
   );
 
-  constructor(private actions$: Actions, private jobService: JobService) {}
+  constructor(
+    private actions$: Actions,
+    private jobService: JobService
+  ) {}
 }

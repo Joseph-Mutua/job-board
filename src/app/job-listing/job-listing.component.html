@@ -14,12 +14,12 @@
   </form> -->
 
   <!-- Sort options -->
-  <div>
+  <!-- <div>
     <button type="button" (click)="sortJobs('date')">Sort by date</button>
     <button type="button" (click)="sortJobs('type')">Sort by type</button>
   </div>
 
-<!-- Job listings -->
+
 <div *ngIf="jobListings as jobListings;">
   <div *ngFor="let job of jobListings">
     <h2>{{ job.job_title }}</h2>
@@ -29,7 +29,220 @@
     <p>{{ job.date_posted }}</p>
     <p>{{ job.job_type }}</p>
   </div>
+</div> -->
+
+  <!-- <pre> {{jobListings | json}} </pre>
+</div> -->
+
+  <!-- <div class="container">
+    <p>Search for a Job:</p>
+
+    <div class="my-3 row">
+      <input
+        type="text"
+        [(ngModel)]="searchKeyword"
+        (ngModelChange)="onSearchChange($event)"
+        placeholder="Search based on Job Title / Location / Job Type / Category / Company Name"
+        class="form-control"
+        id="jobsearch"
+      />
+    </div>
+  </div> -->
 </div>
 
-<pre> {{jobListings | json}} </pre>
+<div class="container">
+  <div class="row">
+    <div class="col-lg-12 card-margin">
+      <div class="card search-form">
+        <div class="card-body p-0">
+          <form id="search-form">
+            <div class="row">
+              <div class="col-12">
+                <div class="row no-gutters">
+                  <div class="col-lg-3 col-md-3 col-sm-12 p-0">
+                    <select
+                      class="form-control"
+                      id="exampleFormControlSelect1"
+                      (change)="onLocationChange($event)"
+                    >
+                      <option value="">Location</option>
+                      <option value="Nairobi">Nairobi</option>
+                      <option value="Mombasa">Mombasa</option>
+                      <option value="Kisumu">Kisumu</option>
+                      <option value="Thika">Thika</option>
+                      <option value="Nakuru">Nakuru</option>
+                      <option value="Machakos">Machakos</option>
+                    </select>
+                  </div>
+                  <div class="col-lg-8 col-md-6 col-sm-12 p-0">
+                    <input
+                      type="text"
+                      name="search"
+                      [(ngModel)]="searchKeyword"
+                      (ngModelChange)="onSearchChange($event)"
+                      placeholder="Search based on Job Title / Location / Job Type / Category / Company Name"
+                      class="form-control"
+                      id="jobsearch"
+                    />
+                  </div>
+                  <div class="col-lg-1 col-md-3 col-sm-12 p-0">
+                    <button type="submit" class="btn btn-base">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        class="feather feather-search"
+                      >
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <div class="card card-margin">
+        <div class="card-body">
+          <div class="row search-body">
+            <div class="col-lg-12">
+              <div class="search-result">
+                <div class="result-header">
+                  <div class="row">
+                    <div class="col-lg-6">
+                      <div class="records">
+                        Showing: <b>1-20</b> of <b>200</b> result
+                      </div>
+                    </div>
+                    <div class="col-lg-6">
+                      <div class="result-actions">
+                        <div class="result-sorting">
+                          <span style="font-size: 1rem">Sort By:</span>
+
+                          <select
+                            id="sortType"
+                            class="form-control border-0"
+                            style="width: 150px"
+                            [(ngModel)]="sortType"
+                            (ngModelChange)="onSortChange($event)"
+                          >
+                            <option selected value="">Sort by</option>
+                            <option value="date">Date Posted</option>
+                            <option value="type">Job Type</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="">
+                  <div class="table-responsive">
+                  <table class="table widget-26">
+  <thead>
+    <tr>
+      <th>Job Title</th>
+      <th>Date Posted</th>
+      <th>Job Type</th>
+      <th>Location</th>
+      <th>Job Category</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let job of filteredJobs">
+      <td>
+        <div class="widget-26-job-title">
+          <a href="#">{{ job.job_title }}</a>
+          <p class="m-0">
+            <a href="#" class="employer-name">{{ job.company_name }}</a>
+            <span class="text-muted time">{{ daysAgo(job.date_posted) }} days ago</span>
+          </p>
+        </div>
+      </td>
+
+      <td>
+        <div class="widget-26-job-info">
+          <p class="text-muted m-0">{{ job.date_posted | date : "dd/MM/yyyy" }}</p>
+        </div>
+      </td>
+      <td>
+        <div class="widget-26-job-type">{{ job.job_type }}</div>
+      </td>
+      <td>
+        <div class="widget-26-job-info">
+          <p class="text-muted m-0">
+            In <span class="location">{{ job.location }}</span>
+          </p>
+        </div>
+      </td>
+
+      <td>
+        <div class="widget-26-job-category" [ngClass]="{
+          'bg-soft-base': job.job_category === 'Banking and Finance',
+          'bg-soft-warning': job.job_category === 'Arts and Design',
+          'bg-soft-success': job.job_category === 'Energy and Utilities' || (job.job_category !== 'Banking and Finance' && job.job_category !== 'Arts and Design' && job.job_category !== 'Engineering' && job.job_category !== 'Information Technology' && job.job_category !== 'Healthcare'),
+          'bg-soft-danger': job.job_category === 'Engineering' || job.job_category === 'Information Technology',
+          'bg-soft-info': job.job_category === 'Healthcare'
+        }">
+          <i class="indicator bg-base"></i>
+          <span>{{ job.job_category }}</span>
+        </div>
+      </td>
+    </tr>
+    <tr *ngIf="filteredJobs.length === 0">
+      <td colspan="5" class="text-center">No Jobs Found</td>
+    </tr>
+  </tbody>
+</table>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <nav class="d-flex justify-content-center">
+            <ul
+              class="pagination pagination-base pagination-boxed pagination-square mb-0"
+            >
+              <li class="page-item">
+                <a class="page-link no-border" href="#">
+                  <span aria-hidden="true">«</span>
+                  <span class="sr-only">Previous</span>
+                </a>
+              </li>
+              <li class="page-item active">
+                <a class="page-link no-border" href="#">1</a>
+              </li>
+              <li class="page-item">
+                <a class="page-link no-border" href="#">2</a>
+              </li>
+              <li class="page-item">
+                <a class="page-link no-border" href="#">3</a>
+              </li>
+              <li class="page-item">
+                <a class="page-link no-border" href="#">4</a>
+              </li>
+              <li class="page-item">
+                <a class="page-link no-border" href="#">
+                  <span aria-hidden="true">»</span>
+                  <span class="sr-only">Next</span>
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
