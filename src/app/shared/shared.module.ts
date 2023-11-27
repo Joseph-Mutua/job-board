@@ -5,7 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
 import { StoreModule } from '@ngrx/store';
-import { NgbModule, NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 
@@ -19,7 +19,7 @@ import { NgbModule, NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
     HttpClientModule,
     RouterModule,
     NgbModule,
-    NgbTypeaheadModule,
+
   ],
   exports: [
     CommonModule,
@@ -28,9 +28,8 @@ import { NgbModule, NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
     HttpClientModule,
     RouterModule,
     StoreModule,
-
     NgbModule,
-    NgbTypeaheadModule,
+
   ],
 })
 export class SharedModule {}

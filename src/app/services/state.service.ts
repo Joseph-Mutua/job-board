@@ -8,10 +8,12 @@ import { Job } from '../interfaces/job.model';
 export class StateService {
   private _jobs: BehaviorSubject<Job[]> = new BehaviorSubject<Job[]>([]);
 
+  //fetch jobs
   get jobs(): Observable<Job[]> {
     return this._jobs.asObservable();
   }
 
+  //set jobs to state
   setJobs(jobs: Job[]): void {
     this._jobs.next(jobs);
   }

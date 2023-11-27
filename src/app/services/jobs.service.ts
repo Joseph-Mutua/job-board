@@ -12,6 +12,7 @@ export class JobService {
 
   constructor(private http: HttpClient, private stateService: StateService) {}
 
+  //fetch jobs
   getJobs(): void {
     this.http.get<Job[]>(this.apiUrl).subscribe((jobs) => {
       this.stateService.setJobs(jobs);

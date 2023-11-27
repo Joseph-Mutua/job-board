@@ -1,4 +1,3 @@
-
 import { Component, OnInit } from '@angular/core';
 import { Job } from '../interfaces/job.model';
 import { SharedModule } from '../shared/shared.module';
@@ -62,22 +61,26 @@ export class JobListingComponent implements OnInit {
     );
   }
 
+  //Search input function
   onSearchChange(searchKeyword: string) {
     this.searchKeyword = searchKeyword;
     this.filterJobs();
   }
 
+  //Location input function
   onLocationChange(event: Event) {
     const selectElement = event.target as HTMLSelectElement;
     this.locationKeyword = selectElement.value;
     this.filterJobs();
   }
 
+  //Sort input function
   onSortChange(sortType: string) {
     this.sortType = sortType;
     this.sortJobs();
   }
 
+  //Date posted function
   daysAgo(datePosted: string): number {
     const currentDate = new Date();
     const postedDate = new Date(datePosted);
@@ -85,6 +88,7 @@ export class JobListingComponent implements OnInit {
     return Math.floor(diffInTime / (1000 * 3600 * 24));
   }
 
+  //Filtering and Sort Functionality
   filterJobs() {
     let filtered = [...this.jobListings];
 
@@ -119,6 +123,7 @@ export class JobListingComponent implements OnInit {
     this.filteredJobs = filtered;
   }
 
+  //Sorting Functionality
   sortJobs() {
     if (this.sortType === 'date') {
       this.filteredJobs.sort(
@@ -126,7 +131,9 @@ export class JobListingComponent implements OnInit {
           new Date(b.date_posted).getTime() - new Date(a.date_posted).getTime()
       );
     } else if (this.sortType === 'category') {
-      this.filteredJobs.sort((a, b) => a.job_category.localeCompare(b.job_category));
+      this.filteredJobs.sort((a, b) =>
+        a.job_category.localeCompare(b.job_category)
+      );
     }
   }
 
@@ -135,26 +142,31 @@ export class JobListingComponent implements OnInit {
     return (this.currentPage - 1) * this.itemsPerPage;
   }
 
+  //Pagination Functionality To switch pages
   onPageChange(pageNumber: number) {
     this.currentPage = pageNumber;
     this.calculateIndexes();
   }
 
+  //Pagination Functionality To calculate indexes
   calculateIndexes() {
     const start = (this.currentPage - 1) * this.itemsPerPage;
     const end = this.currentPage * this.itemsPerPage;
     return { start, end };
   }
 
+  //Pagination Functionality To get paginated jobs
   get paginatedJobs(): Job[] {
     const { start, end } = this.calculateIndexes();
     return this.filteredJobs.slice(start, end);
   }
 
+  //Pagination Functionality To get start of Show jobs
   get rangeStart(): number {
     return this.startIndex + 1;
   }
 
+  //Pagination Functionality To get end of Show jobs
   get rangeEnd(): number {
     return Math.min(
       this.startIndex + this.itemsPerPage,
